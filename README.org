@@ -1,0 +1,8 @@
+* Tab Bar Extensions
+
+Usage
+#+begin_src emacs-lisp
+(use-package tab-bar-ext
+  :vc (:fetcher github :repo "rynffoll/tab-bar-ext"))
+#+end_src
+
