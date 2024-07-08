@@ -57,10 +57,11 @@
 ;;;###autoload
 (defun tab-bar-ext-rename-or-close (name)
   (if name
-      (tab-rename name)
+      (or (tab-rename name) t)
     (progn
       (tab-close)
-      (setq quit-flag nil))))
+      ;; (setq quit-flag nil)
+      )))
 
 ;;;###autoload
 (defun tab-bar-ext-post-open-rename (tab)
@@ -88,11 +89,12 @@
 ;;;###autoload
 (defun tab-bar-ext-post-open-project (tab)
   (let* ((inhibit-quit t)
-         (project (and (with-local-quit (call-interactively 'project-switch-project))
-                       (project-current)))
-         (name (when project
-                 (project-name project))))
-    (tab-bar-ext-rename-or-close name)))
+	 (project (and (with-local-quit (call-interactively 'project-switch-project))
+		       (project-current)))
+	 (name (when project
+		 (project-name project))))
+    (when (tab-bar-ext-rename-or-close name)
+      (tab-bar-change-tab-group "projects"))))
 
 ;;;###autoload
 (defun tab-bar-ext-project ()
