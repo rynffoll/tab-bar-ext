@@ -36,6 +36,11 @@
   "Tab Bar Extentions."
   :group 'tools)
 
+(defcustom tab-bar-ext-project-group nil
+  "Enable project group."
+  :type 'boolean
+  :group 'tab-bar-ext)
+
 
 ;;;###autoload
 (defun tab-bar-ext-print-tabs (&optional ignore)
@@ -94,7 +99,9 @@
 	 (name (when project
 		 (project-name project))))
     (when (tab-bar-ext-rename-or-close name)
-      (tab-bar-change-tab-group "projects"))))
+      (if tab-bar-ext-project-group
+	  (tab-bar-change-tab-group "projects")
+	(tab-bar-ext-rename-or-close name)))))
 
 ;;;###autoload
 (defun tab-bar-ext-project ()
